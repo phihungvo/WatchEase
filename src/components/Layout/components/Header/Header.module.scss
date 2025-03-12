@@ -1,0 +1,71 @@
+.wrapper {
+    --header-height: 64px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: var(--header-height);
+    background-color: #032541;
+    align-items: center;
+}
+
+.inner {
+    width: 1300px;
+    height: 56px;
+    position: relative;
+    background-color: #032541;
+    top: 0;
+    left: 0;
+    padding: 0 40px;
+}
+
+.sub_media {
+    display: flex;
+    justify-content: space-between;
+    height: 490px;
+    height: 56px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.leftMenu {
+    display: flex;
+    justify-content: flex-start;
+    color: red;
+
+    img {
+        width: 154px;
+        height: 30px;
+    }
+}
+
+.rightMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%; //
+    height: 40px;
+    width: 238px;
+    color: #fff;
+}
+
+
+.icon {
+    width: 23px; // Đặt kích thước avatar
+    height: 23px;
+    border-radius: 50%; // Bo tròn ảnh
+    overflow: hidden; // Cắt phần thừa
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); // Đổ bóng nhẹ
+
+    img {
+        width: 100%; // Chiếm toàn bộ không gian div
+        height: 100%;
+        object-fit: cover; // Đảm bảo ảnh không bị méo
+    }
+}
+
+.search {
+    color: #01b4e4;
+}
