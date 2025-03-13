@@ -15,7 +15,7 @@ WatchEase là một ứng dụng web giúp người dùng khám phá và tìm ki
 - **ReactJS**: Xây dựng giao diện người dùng.
 - **Axios**: Gửi yêu cầu API đến TMDB.
 - **React Router**: Điều hướng giữa các trang.
-- **Tailwind CSS** (hoặc một thư viện UI khác nếu có): Thiết kế giao diện.
+- **Ant Design**: Thiết kế giao diện.
 
 ## Thông tin về The Movie Database (TMDB)
 [The Movie Database (TMDB)](https://www.themoviedb.org/) là một cơ sở dữ liệu phim cộng đồng, cung cấp thông tin chi tiết về phim và chương trình truyền hình, bao gồm:
