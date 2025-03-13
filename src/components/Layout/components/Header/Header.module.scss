@@ -50,9 +50,9 @@
 
 
 .icon {
-    width: 23px; // Đặt kích thước avatar
+    width: 23px;
     height: 23px;
-    border-radius: 50%; // Bo tròn ảnh
+    border-radius: 50%;
     overflow: hidden; // Cắt phần thừa
     display: flex;
     align-items: center;
@@ -68,4 +68,154 @@
 
 .search {
     color: #01b4e4;
+}
+
+.badge {
+    position: relative;
+}
+
+.count {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15px;
+    height: 15px;
+    top: 0;
+    right: -5px;
+    margin-top: -5px;
+    color: #fff;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.search-bar {
+    height: 44px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(227, 227, 227);
+}
+
+.search-form {
+    width: 1300px;
+    height: 44px;
+    display: flex;
+    padding: 0 40px;
+    align-items: center;
+    margin-left: 50px;
+    gap: 10px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid rgb(227, 227, 227);
+    padding-right: 30px;
+    /* Chừa khoảng trống cho icon */
+}
+
+.status_loading {
+    position: absolute;
+    right: 10px;
+    /* Đặt ở góc phải của input */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+.clear,
+.loading {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+}
+
+.loading {
+    color: gray;
+    animation: spin 1s linear infinite;
+}
+
+.clear {
+    cursor: pointer;
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.banner {
+    width: 100%;
+    height: 300px;
+    background-image: url('https://collider.com/wp-content/uploads/the-avengers-movie-poster-banners-04.jpg');
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.content-inner {
+    position: absolute;
+    width: 1330px;
+    height: 238px;
+    color: white;
+    padding: 30px 40px;
+    font-size: 2rem;
+
+    h1 {
+        line-height: 1;
+    }
+
+    h2 {
+        margin: 0;
+    }
+}
+
+.search-inp {
+    width: 100%;
+    height: 46px;
+    color: rgba(0, 0, 0, .5);
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin-top: 32px;
+    background-color: #fff;
+    position: relative;
+    --tmdbLightGreen: 30, 213, 169;
+    --tmdbLightBlue: 1, 180, 228;
+
+    input {
+        width: 100%;
+        height: 100%;
+        // border: 1px solid red;
+        font-size: 1.5rem;
+    }
+
+    button {
+        height: 46px;
+        padding: 10px 26px;
+        background: linear-gradient(to right, rgba(var(--tmdbLightGreen), 1) 0%, rgba(var(--tmdbLightBlue), 1) 100%);
+        border-radius: 30px;
+        position: absolute;
+        top: 0px;
+        right: -1px;
+        z-index: 2;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button:hover {
+        color: #000;
+    }
+
+
 }
