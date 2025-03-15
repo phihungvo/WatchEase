@@ -3,64 +3,43 @@ import classNames from "classnames/bind";
 import 'tippy.js/dist/tippy.css';
 import React, { useEffect, useState } from 'react';
 import { Segmented, Card } from 'antd';
-import { getMovieInWeek } from '~/services/index';
 import CardInfo from '../CardInfo';
 
 const cx = classNames.bind(styles)
 
-function Poster({ trendingState }) {
-    const [state, setState] = useState(trendingState.length > 0 ? trendingState[0] : null)
-    const [results, setResults] = useState([])
-    const { Meta } = Card;
+function Poster({ title, options, fetchData, defaultValue = '', isTrailer = false }) {
+    const [state, setState] = useState(defaultValue || (options.length > 0 ? options[0] : ''));
+    const [results, setResults] = useState([]);
 
     useEffect(() => {
-        console.log("State cập nhật:", state);
-
-        const fetchMovieInWWeek = async () => {
+        let isMounted = true;
+        const loadData = async () => {
             try {
-                const results = await getMovieInWeek();
-                setResults(results)
-                console.log('Success when get movies.', results);
+                const result = await fetchData(state);
+                if (isMounted) setResults(result);
+
+                console.log("Result useEffect((): ", result)
             } catch (error) {
-                console.log('Error when get movies.');
+                console.error("Error fetching data:", error);
             }
         };
-
-        fetchMovieInWWeek();
-    }, [state]);
-
-
-    const handleChange = (value) => {
-        setState(value)
-    };
+        loadData();
+        return () => { isMounted = false; };
+    }, [state, fetchData]);
 
     return (
-        <div className={cx('wrapper')}>
-            <div className={cx('inner')}>
-                <div className={cx('header')}>
-                    <div className={cx('wrapper-btn')}>
-                        <h2>Trending</h2>
-                        <>
-                            <Segmented
-                                value={state}
-                                style={{
-                                    marginBottom: 8,
-                                }}
-                                onChange={handleChange}
-                                options={trendingState}
-                                className={cx('segment')}
-                            />
-                        </>
-                    </div>
+        <div className={cx("wrapper")}>
+            <div className={cx("inner")}>
+                <div className={cx("header")}>
+                    <h2>{title}</h2>
+                    <Segmented value={state} onChange={setState} options={options} className={cx("segment")} />
                 </div>
-
-                <div className={cx('list-film')}>
-                    <CardInfo movieResult={results} />
+                <div className={cx("list-film")}>
+                    <CardInfo isTrailer={isTrailer} state={state} movieResult={results} />
                 </div>
             </div>
-
         </div>
     );
-};
+}
 
 export default Poster;

@@ -9,16 +9,27 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faLanguage, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import SearchMovie from '../Search/index'
 import { useDebounce } from '~/hooks';
-import { searchMovies } from '~/services/index';
+import {
+    searchMovies,
+    getMovieToday, getMovieInWeek,
+    getPopularMovie,
+    getPopularMovieTrailers,
+    getInThreatersMovieTrailers,
+} from "~/services";
 import Poster from '../Poster';
 
 const cx = classNames.bind(styles)
 
 function Header() {
+    const trendingStates = [
+        'Today',
+        'This Week'
+    ]
 
     const [searchValue, setSearchValue] = useState('')
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
+    // const [selectedState, setSelectedState] = useState(trendingStates[0]);
 
     const debounced = useDebounce(searchValue, 400);
 
@@ -33,12 +44,23 @@ function Header() {
         setSearchValue(e.target.value)
     }
 
-    const trendingState = [
-        'Today',
-        'This Week'
-    ]
+    const fetchTrendingMovies = async (state) => {
+        return state === "Today" ? await getMovieToday() : await getMovieInWeek();
+    };
 
-    // Then replace the useEffect with the following:
+    const fetchPopularMovies = async () => {
+        return await getPopularMovie();
+    };
+
+    const fetchTrailerMovies = async (state) => {
+        // return state === "Popular" ? await getPopularMovieTrailers() : await getInThreatersMovieTrailers();
+        const data = state === "Popular" ?
+            await getPopularMovieTrailers() :
+            await getInThreatersMovieTrailers();
+        console.log("Trailer data:", data); // Add this line to inspect the data
+        return data;
+    }
+
     useEffect(() => {
         if (!debounced.trim()) {
             setSearchResult([]);
@@ -61,21 +83,6 @@ function Header() {
 
         fetchMovies();
     }, [debounced]);
-
-    // useEffect(() => {
-    //     fetch(
-    //         `https://api.themoviedb.org/3/search/movie?api_key=aad34a977eb04581217d21401cd37a60&query=${encodeURIComponent(
-    //             debounced)}&type=less`
-    //     ).then((res) => res.json())
-    //         .then((res) => {
-    //             setSearchResult(res.results);
-    //             console.log('Success when get movies.', res.results)
-    //         })
-    //         .catch(() => {
-    //             console.log('Error when get movies.')
-    //         });
-
-    // }, [debounced]);
 
     return (
         <>
@@ -148,7 +155,28 @@ function Header() {
                 </div>
             </div>
 
-            <Poster trendingState={trendingState} />
+            <Poster
+                title="Trending Movies"
+                options={["Today", "This Week"]}
+                fetchData={fetchTrendingMovies}
+                defaultValue="Today"
+            // isTrailer={false}
+            />
+
+            <Poster
+                title="Lasted Trailers"
+                options={["Popular", "In Theaters"]}
+                fetchData={fetchTrailerMovies}
+                defaultValue="Popular"
+                isTrailer={true}
+            />
+
+            <Poster
+                title="Popular Movies"
+                options={[]}
+                fetchData={fetchPopularMovies}
+            // isTrailer={false}
+            />
 
         </>
     );
