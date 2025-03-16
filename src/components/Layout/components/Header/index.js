@@ -17,6 +17,7 @@ import {
     getInThreatersMovieTrailers,
 } from "~/services";
 import Poster from '../Poster';
+import SkeletonComponent from '../Skeleton';
 
 const cx = classNames.bind(styles)
 
@@ -178,6 +179,7 @@ function Header() {
             // isTrailer={false}
             />
 
+            <SkeletonComponent />
         </>
     );
 }

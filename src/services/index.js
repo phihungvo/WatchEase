@@ -126,8 +126,8 @@ export const getPopularMovieTrailers = async () => {
                     // console.log('Filtered trailers:', videosResponse.data.results.filter(
                     //     video => video.type.toLowerCase() === 'trailer' && video.site.toLowerCase() === 'youtube'
                     // ));
-                    // console.log('Available videos for movie:', movie.title, trailers);
-                    // console.log('>>>> Available videos for movie :', trailers[0], trailers[0].key);
+                    console.log('Available videos for movie:', movie.title, trailers);
+                    console.log('>>>> Available videos for movie :', trailers[0], trailers[0].key);
 
                     return {
                         ...movie,

@@ -1,72 +1,92 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Flex, Progress } from 'antd';
 import styles from './CardInfo.module.scss';
 import classNames from "classnames/bind";
-import { PlayCircleOutlined } from '@ant-design/icons';
+import { PlayCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const cx = classNames.bind(styles)
 
-function CardInfo({ movieResult, isTrailer, state = null }) {
+function CardInfo({ movieResult, isTrailer }) {
     const { Meta } = Card;
+    const [showTrailer, setShowTrailer] = useState(false);
+    const [trailerURL, setTrailerURL] = useState('');
+
+    const handleClickPlayButton = (movie) => {
+        setTrailerURL(`https://www.youtube.com/embed/${movie.trailer_key}?autoplay=1`);
+        setShowTrailer(true);
+    }
+
+    const handleCloseTrailer = () => {
+        setShowTrailer(false);
+        // Dừng video bằng cách xóa URL
+        setTrailerURL('');
+    }
+
+    // Xử lý bấm ESC để đóng trailer
+    useEffect(() => {
+        const handleEscKey = (event) => {
+            if (event.key === 'Escape' && showTrailer) {
+                handleCloseTrailer();
+            }
+        };
+
+        document.addEventListener('keydown', handleEscKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscKey);
+        };
+    }, [showTrailer]);
 
     return (
         <div className={cx('card-film')}>
-
             {
                 movieResult.map((movie) => (
                     <Card
                         key={movie.id}
                         hoverable
-                        style={isTrailer ? { width: 300, height: 320, marginLeft: 15 } : { width: 150, height: 320, marginLeft: 15 }}
-                        cover={isTrailer ? (
-                            // <iframe
-                            //     src={`https://www.youtube.com/embed/${movie.trailer_key}`}
-                            //     title={movie.title}
-                            //     frameBorder="0"
-                            //     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            //     allowFullScreen
-                            //     style={{
-                            //         width: '100%',
-                            //         height: '169px',
-                            //         objectFit: 'cover',
-                            //         borderTopLeftRadius: '8px',
-                            //         borderTopRightRadius: '8px',
-                            //     }}
-                            // />
-                            <>
-                                <img
-                                    alt={movie.title}
-                                    src={`https://image.tmdb.org/t/p/w500${movie.image_path}`}
-                                    style={{
-                                        width: '150px',
-                                        height: '225px',
-                                        objectFit: 'cover',
-                                        borderTopLeftRadius: '25px',
-                                        borderTopRightRadius: '25px',
-                                    }}
-                                />
-                                <button>
-                                    <PlayCircleOutlined className={cx('play-icon')} />
-                                </button>
-                            </>
-                        ) :
-                            (
+                        style={isTrailer ?
+                            { width: 300, height: 320, marginLeft: 15 }
+                            :
+                            { width: 150, height: 320, marginLeft: 15 }
+                        }
+                        cover={
+                            isTrailer ? (
+                                <div className={cx('card-content')}>
+                                    <img
+                                        alt={movie.title}
+                                        src={`https://image.tmdb.org/t/p/w500${movie.image_path}`}
+                                        style={{
+                                            width: '100%',
+                                            height: '225px',
+                                            objectFit: 'cover',
+                                            borderTopLeftRadius: '25px',
+                                            borderTopRightRadius: '25px',
+                                        }}
+                                    />
+                                    <div className={cx('play-icon')}>
+                                        <button onClick={() => handleClickPlayButton(movie)}>
+                                            <PlayCircleOutlined className={cx('icon')} />
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
                                 <img
                                     alt={movie.title}
                                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                                     style={{
-                                        width: '150px',
-                                        height: '225px',
-                                        objectFit: 'cover',
-                                        borderTopLeftRadius: '25px',
-                                        borderTopRightRadius: '25px',
+                                        width: "150px",
+                                        height: "225px",
+                                        objectFit: "cover",
+                                        borderTopLeftRadius: "25px",
+                                        borderTopRightRadius: "25px",
                                     }}
                                 />
                             )
                         }
                     >
-                        {/* #21d07a */}
-                        <div className={cx('progress-overlay')} >
+
+                        {isTrailer ? (
+                            <></>
+                        ) : <div className={cx('progress-overlay')} >
                             <Flex wrap gap="small">
                                 <Progress
                                     type="circle"
@@ -76,13 +96,34 @@ function CardInfo({ movieResult, isTrailer, state = null }) {
                                     trailColor='#1f4a29'
                                 />
                             </Flex>
-                        </div>
+                        </div>}
                         <Meta className={cx('info')} title={movie.title} description={movie.release_date} />
                     </Card>
                 ))
             }
 
-        </div >
+            {showTrailer && (
+                <>
+                    {/* Lớp phủ mờ */}
+                    <div className={cx('overlay')} onClick={handleCloseTrailer}></div>
+
+                    {/* Container trailer */}
+                    <div className={cx('trailer-container')}>
+                        <div className={cx('trailer-wrapper')}>
+                            <button className={cx('close-button')} onClick={handleCloseTrailer}>
+                                <CloseCircleOutlined />
+                            </button>
+                            <iframe
+                                src={trailerURL}
+                                title="Movie Trailer"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                        </div>
+                    </div>
+                </>
+            )}
+        </div>
     );
 }
 

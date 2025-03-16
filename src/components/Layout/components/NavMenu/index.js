@@ -1,22 +1,32 @@
-import classNames from "classnames/bind"
-import styles from './NavMenu.module.scss'
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
+import classNames from "classnames/bind";
+import styles from './NavMenu.module.scss';
+import { publicRoutes } from "~/routes";
+import { useNavigate } from 'react-router-dom';
 
-const cx = classNames.bind(styles)
+const cx = classNames.bind(styles);
 
 function NavMenu() {
-    const menu_titles = [
-        'Movies', 'TV Show', 'People', 'More'
-    ]
+    const navigate = useNavigate();
+
+    const handleNavigate = (path) => {
+        if (path === '/') {
+            navigate('/'); // Điều hướng Home
+        } else {
+            navigate(path);
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
-            {
-                menu_titles.map((title, index) => (
-                    <div className={cx('menu_item')} key={index}>{title}</div>
-                ))
-            }
+            {publicRoutes.slice(1, publicRoutes.length).map((route, index) => (
+                <div
+                    className={cx('menu_item')}
+                    onClick={() => handleNavigate(route.path)}
+                    key={index}
+                >
+                    {route.title}
+                </div>
+            ))}
         </div>
     );
 }
