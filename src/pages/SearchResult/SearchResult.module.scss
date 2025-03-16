@@ -1,0 +1,44 @@
+.wrapper {
+    width: 100%;
+    height: 400px;
+}
+
+.content {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.left-side {
+    width: 256px;
+    min-height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    flex-direction: column; // Xếp theo chiều dọc
+}
+
+.search-result {
+    width: 100%;
+    height: 64px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #01b4e4;
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: left;
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.left-side {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// .ant-menu-item .ant-menu-item-only-child:hover {
+//     background-color: rgba(255, 0, 0, 0.008) !important;
+// }

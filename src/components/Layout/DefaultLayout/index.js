@@ -16,3 +16,5 @@ function DefaultLayout({ children }) {
 }
 
 export default DefaultLayout;
+
+// 'Movies', 'TV Shows', 'People', 'Collections', 'Companies', 'Keywords', 'Networds'

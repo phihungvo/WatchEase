@@ -16,18 +16,36 @@ const tmdbApi = axios.create({
     baseURL: BASE_URL
 });
 
+// export const searchMovies = async (query) => {
+//     try {
+//         const response = await axios.get(`${BASE_URL}/search/movie`, {
+//             params: {
+//                 api_key: API_KEY,
+//                 query: query,
+//             },
+//         });
+
+//         return response.data.results;
+//     } catch (error) {
+//         console.error("Error fetching search movies ", error)
+//         return [];
+//     }
+// }
+
+// https://api.themoviedb.org/3/search/multi?query=b&page=500&api_key=aad34a977eb04581217d21401cd37a60
 export const searchMovies = async (query) => {
     try {
-        const response = await axios.get(`${BASE_URL}/search/movie`, {
+        const response = await axios.get(`${BASE_URL}/search/multi`, {
             params: {
                 api_key: API_KEY,
+                page: 1,
                 query: query,
             },
         });
-
+        console.error("Fetching successfully search multi type... ", response.data.results)
         return response.data.results;
     } catch (error) {
-        console.error("Error fetching search movies ", error)
+        console.error("Error fetching search multi type... ", error)
         return [];
     }
 }

@@ -3,6 +3,7 @@ import Movie from '~/pages/Movie';
 import TVShow from '~/pages/TVShow';
 import People from '~/pages/People';
 import More from '~/pages/More';
+import SearchResult from '~/pages/SearchResult';
 
 const publicRoutes = [
     { path: '/', component: Home, title: 'Home' },
@@ -10,7 +11,12 @@ const publicRoutes = [
     { path: '/tv-show', component: TVShow, title: 'TV Shows' },
     { path: '/people', component: People, title: 'People' },
     { path: '/more', component: More, title: 'More' },
+    { path: '/search', component: SearchResult, title: 'Search Result' }, // Xóa để tránh hiển thị ra Navbar
 ];
+
+// const resultsRoutes = [
+//     { path: '/search', component: SearchResult, title: 'Search Result' },
+// ];
 
 const privateRoutes = [];
 
