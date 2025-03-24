@@ -197,17 +197,21 @@ export const getInThreatersMovieTrailers = async () => {
                         },
                     });
 
-                    const file_path = imageOfMovie.data.backdrops[0]
-                    console.log('file path>>>>>: ', file_path.file_path)
+                    // const file_path = imageOfMovie.data.backdrops[0]
+                    const file_path = imageOfMovie.data.backdrops && imageOfMovie.data.backdrops.length > 0 
+                        ? imageOfMovie.data.backdrops[0].file_path 
+                        : null;
+                    // console.log('file path>>>>>: ', file_path.file_path)
+                    console.log('file path>>>>>: ', file_path)
 
                     const trailers = videoResponse.data.results.filter(
-                        video => video.type === 'Trailer' && video.site === 'Youtube'
+                        video => video.type === 'Trailer' && video.site === 'YouTube'
                     );
 
                     return {
                         ...movie,
                         trailer_key: trailers.length > 0 ? trailers[0].key : null,
-                        image_path: file_path.file_path
+                        image_path: file_path
                     };
                 } catch (error) {
                     console.error(`Error fetching videos for movie ${movie.id}:`, error);

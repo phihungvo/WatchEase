@@ -1,0 +1,35 @@
+.item {
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: relative;
+    
+    /* Viền trong suốt */
+    border: 5px solid transparent;
+    
+    /* Dịch icon sang trái để đè lên cái trước */
+    margin-left: -20px;
+
+    /* Cắt bớt phần icon bên trái */
+    clip-path: inset(0px 0px 0px -10px);
+    
+    /* Hiệu ứng hover */
+    transition: transform 0.3s ease;
+}
+
+.emoji-button {
+    font-size: 34px;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover sẽ làm icon nhô ra một chút */
+.emoji-button:hover {
+    transform: scale(1.2);
+    z-index: 2;
+}
